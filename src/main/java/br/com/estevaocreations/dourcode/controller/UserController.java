@@ -26,4 +26,10 @@ public class UserController {
         UserDto userDto = userService.getOne(id);
         return userDto != null ? ResponseEntity.ok(userDto) : ResponseEntity.badRequest().build();
     }
+
+    @GetMapping
+    public ResponseEntity<?> getSelf(){
+        UserDto userDto = userService.getSelf();
+        return userDto != null ? ResponseEntity.ok(userDto) : ResponseEntity.badRequest().build();
+    }
 }

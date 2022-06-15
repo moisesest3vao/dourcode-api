@@ -1,5 +1,7 @@
 package br.com.estevaocreations.dourcode.config.security.service;
 
+import br.com.estevaocreations.dourcode.config.security.dto.AuthDto;
+import br.com.estevaocreations.dourcode.dto.UserDto;
 import br.com.estevaocreations.dourcode.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,18 +19,21 @@ public class TokenService {
     @Value("${forum.jwt.secret}")
     String secret;
 
-    public String gerarToken(Authentication authentication) {
+    public AuthDto gerarToken(Authentication authentication) {
         User logged = (User)authentication.getPrincipal();
         Date now = new Date();
         Date expiration = new Date(now.getTime() + Long.parseLong(this.expiration));
-
-        return Jwts.builder()
+        String token = Jwts.builder()
                 .setIssuer("DoUrCode API")
                 .setSubject(logged.getId().toString())
                 .setIssuedAt(now)
                 .setExpiration(expiration)
                 .signWith(SignatureAlgorithm.HS256, secret)
                 .compact();
+
+        String refresh_token = "";
+
+        return new AuthDto(token, "Bearer", refresh_token, new UserDto(logged));
     }
 
     public boolean isTokenValid(String token) {

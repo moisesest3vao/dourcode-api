@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +32,6 @@ public class User implements UserDetails {
     private String email;
     @NotNull
     @NotBlank
-    @Size(max = 20, min = 8)
     private String password;
     @NotNull
     @NotBlank
@@ -47,10 +47,10 @@ public class User implements UserDetails {
 
     public User(UserForm userForm) {
         this.email = userForm.getEmail();
-        this.password = userForm.getPassword();
+        this.password = new BCryptPasswordEncoder().encode(userForm.getPassword());
         this.firstName = userForm.getFirstName();
         this.lastName = userForm.getLastName();
-        this.fullName = userForm.getFullName();
+        this.fullName = userForm.getFirstName()+" "+userForm.getLastName();
         this.role = Role.ROLE_USER;
     }
 

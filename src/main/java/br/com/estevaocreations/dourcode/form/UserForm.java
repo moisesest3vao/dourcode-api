@@ -30,5 +30,4 @@ public class UserForm {
     @NotBlank
     @Size(max = 50, min = 2)
     private String lastName;
-    private String fullName;
 }
