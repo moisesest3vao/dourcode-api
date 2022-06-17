@@ -1,6 +1,8 @@
 package br.com.estevaocreations.dourcode.model;
 
 import br.com.estevaocreations.dourcode.config.security.service.AuthenticationService;
+import br.com.estevaocreations.dourcode.dto.LessonDto;
+import br.com.estevaocreations.dourcode.dto.UserDto;
 import br.com.estevaocreations.dourcode.enums.Role;
 import br.com.estevaocreations.dourcode.form.UserForm;
 import lombok.AllArgsConstructor;
@@ -53,6 +55,8 @@ public class User implements UserDetails {
         this.fullName = userForm.getFirstName()+" "+userForm.getLastName();
         this.role = Role.ROLE_USER;
     }
+
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
